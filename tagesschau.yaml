@@ -1,0 +1,21 @@
+sensor:
+  - platform: feedparser
+    name: tagesschau
+    feed_url: "https://www.tagesschau.de/index~rss2.xml"
+    date_format: "%a, %d %b %Y %H:%M:%S %z"
+    inclusions:
+      - title
+      - link
+      - summary
+      - published
+    scan_interval:
+      minutes: 10
+
+input_number:
+  tagesschau_count:
+    name: Anzahl Meldungen
+    min: 1
+    max: 30
+    step: 1
+    mode: slider
+    icon: mdi:counter

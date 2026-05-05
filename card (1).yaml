@@ -1,0 +1,58 @@
+type: vertical-stack
+cards:
+  - type: entities
+    entities:
+      - entity: input_number.tagesschau_count
+        name: Anzahl Meldungen
+
+  - type: markdown
+    card_mod:
+      style: |
+        ha-markdown h2 {
+          display: flex;
+          align-items: center;
+          gap: 0.5em;
+          margin-top: 0;
+          margin-bottom: 1em;
+          line-height: 1.2;
+        }
+        ha-markdown img {
+          max-height: 1.4em;
+          max-width: 1.4em;
+          width: auto;
+          height: auto;
+          object-fit: contain;
+          vertical-align: middle;
+          border-radius: 3px;
+        }
+        ha-markdown small {
+          display: block;
+          font-size: 0.78em;
+          opacity: 0.65;
+        }
+        ha-markdown p:has(small) {
+          margin-bottom: 2em;
+        }
+    content: |
+      ## ![](https://www.google.com/s2/favicons?domain=tagesschau.de&sz=64) Tagesschau
+
+      {%- set entries = state_attr('sensor.tagesschau', 'entries') %}
+      {%- set count = states('input_number.tagesschau_count') | int(10) %}
+      {%- if entries %}
+      {%- set ns = namespace(items=[]) %}
+      {%- set today = now().date() %}
+      {%- for e in entries %}
+      {%- set dt = strptime(e.published, '%a, %d %b %Y %H:%M:%S %z') %}
+      {%- set ns.items = ns.items + [{'ts': dt.timestamp(), 'time': dt.strftime('%H:%M') if dt.date() == today else dt.strftime('%d.%m. %H:%M'), 'title': e.title, 'link': e.link, 'summary': e.summary | default('')}] %}
+      {%- endfor %}
+      {%- for e in (ns.items | sort(attribute='ts', reverse=true))[:count] %}
+
+      **[{{ e.time }} – {{ e.title }}]({{ e.link }})**
+
+      <small>{{ e.summary | truncate(150, false, '…') }}</small>
+
+      {%- endfor %}
+      {%- else %}
+
+      _Keine Einträge geladen._
+      {%- endif %}
