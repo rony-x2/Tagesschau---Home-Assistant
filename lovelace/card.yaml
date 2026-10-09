@@ -42,8 +42,11 @@ cards:
       {%- set ns = namespace(items=[]) %}
       {%- set today = now().date() %}
       {%- for e in entries %}
-      {%- set dt = strptime(e.published, '%a, %d %b %Y %H:%M:%S %z') %}
+      {%- set dt = strptime(e.published | default(''), '%a, %d %b %Y %H:%M:%S %z', none) %}
+      {%- if dt is not none %}
+      {%- set dt = dt | as_local %}
       {%- set ns.items = ns.items + [{'ts': dt.timestamp(), 'time': dt.strftime('%H:%M') if dt.date() == today else dt.strftime('%d.%m. %H:%M'), 'title': e.title, 'link': e.link, 'summary': e.summary | default('')}] %}
+      {%- endif %}
       {%- endfor %}
       {%- for e in (ns.items | sort(attribute='ts', reverse=true))[:count] %}
 

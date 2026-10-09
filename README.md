@@ -12,31 +12,31 @@ Zeigt aktuelle Nachrichten der [Tagesschau](https://www.tagesschau.de) als Liste
 ## Installation
 
 1. **HACS-Module installieren:**
-   - HACS → *Integrationen* → `feedparser` suchen und installieren
-   - HACS → *Frontend* → `card-mod` suchen und installieren
+   - In HACS nach `feedparser` suchen (Typ *Integration*) und herunterladen. Taucht es nicht auf: HACS → Menü (⋮) → *Benutzerdefinierte Repositories* → `https://github.com/custom-components/feedparser` mit Typ *Integration* hinzufügen.
+   - In HACS nach `card-mod` suchen (Typ *Dashboard*) und herunterladen.
 2. Home Assistant neu starten.
 3. Falls in der `configuration.yaml` noch nicht aktiv, Packages-Loader aktivieren:
    ```yaml
    homeassistant:
      packages: !include_dir_named packages
    ```
-4. Datei `packages/tagesschau.yaml` in das `packages/`-Verzeichnis deiner HA-Konfiguration kopieren. Sie enthält:
+4. Datei `packages/tagesschau.yaml` aus diesem Repository in das `packages/`-Verzeichnis deiner HA-Konfiguration kopieren (Ordner ggf. anlegen). Sie enthält:
    - den `feedparser`-Sensor
    - den `input_number`-Helper für die Anzahl der Meldungen
 5. Konfiguration prüfen (*Entwicklungswerkzeuge → YAML-Konfiguration prüfen*) und HA neu starten.
-6. Inhalt aus `lovelace/card.yaml` als neue Karte in dein Dashboard einfügen (vertical-stack mit Slider und Markdown-Karte).
+6. Inhalt aus `lovelace/card.yaml` als neue Karte in dein Dashboard einfügen (*Karte hinzufügen → Manuell*; vertical-stack mit Slider und Markdown-Karte).
 
 ## Konfiguration anpassen
 
 - **Feed-Quelle:** `feed_url` in `packages/tagesschau.yaml` auf einen anderen RSS-Feed umbiegen.
 - **Aktualisierungsintervall:** `scan_interval` (Standard: 10 Minuten).
-- **Anzahl Meldungen:** direkt im Dashboard per Slider — Bereich konfigurierbar über `min` / `max` beim `input_number`-Helper.
-- **Beschreibungslänge:** `truncate(150, false, '…')` in `lovelace/card.yaml` — die `150` ist die maximale Zeichenanzahl.
+- **Anzahl Meldungen:** direkt im Dashboard per Slider – Bereich konfigurierbar über `min` / `max` beim `input_number`-Helper.
+- **Beschreibungslänge:** `truncate(150, false, '…')` in `lovelace/card.yaml` – die `150` ist die maximale Zeichenanzahl.
 - **Icon im Header:** URL nach `## ![](...)` in `lovelace/card.yaml` austauschen, oder lokales Icon in `/config/www/` ablegen und als `/local/dateiname.png` referenzieren.
 
 ## Lizenz
 
-MIT
+MIT – siehe [LICENSE](LICENSE). Die Nachrichteninhalte stammen von tagesschau.de (ARD-aktuell) und unterliegen deren Nutzungsbedingungen.
 
 ---
 
@@ -54,19 +54,19 @@ Displays current news items from [Tagesschau](https://www.tagesschau.de) (German
 ## Installation
 
 1. **Install HACS modules:**
-   - HACS → *Integrations* → search for `feedparser` and install
-   - HACS → *Frontend* → search for `card-mod` and install
+   - Search HACS for `feedparser` (type *Integration*) and download it. If it does not show up: HACS → menu (⋮) → *Custom repositories* → add `https://github.com/custom-components/feedparser` as type *Integration*.
+   - Search HACS for `card-mod` (type *Dashboard*) and download it.
 2. Restart Home Assistant.
 3. If not already active in `configuration.yaml`, enable the packages loader:
    ```yaml
    homeassistant:
      packages: !include_dir_named packages
    ```
-4. Copy `packages/tagesschau.yaml` into the `packages/` directory of your HA configuration. It contains:
+4. Copy `packages/tagesschau.yaml` from this repository into the `packages/` directory of your HA configuration (create it if needed). It contains:
    - the `feedparser` sensor
    - the `input_number` helper for the entry count
 5. Check configuration (*Developer Tools → Check Configuration*) and restart HA.
-6. Add the contents of `lovelace/card.yaml` as a new card to your dashboard (vertical-stack with slider and markdown card).
+6. Add the contents of `lovelace/card.yaml` as a new card to your dashboard (*Add card → Manual*; vertical-stack with slider and markdown card).
 
 ## Customization
 
@@ -78,4 +78,4 @@ Displays current news items from [Tagesschau](https://www.tagesschau.de) (German
 
 ## License
 
-MIT
+MIT – see [LICENSE](LICENSE). The news content is provided by tagesschau.de (ARD-aktuell) and subject to its terms of use.
